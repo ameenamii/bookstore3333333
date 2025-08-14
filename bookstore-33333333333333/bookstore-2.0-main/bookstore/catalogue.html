@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Catalogue</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7fafc; margin: 0; padding: 0; }
+        .inner-page-container {
+            max-width: 95%;
+            margin: 20px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+        .inner-page-container h2 {
+            font-size: 2.5rem;
+            color: #2d3748;
+            margin-bottom: 30px;
+            text-align: center;
+            border-bottom: 3px solid #63b3ed;
+            padding-bottom: 15px;
+            display: inline-block;
+        }
+        .catalogue-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 20px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        .catalogue-table th,
+        .catalogue-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .catalogue-table th {
+            background-color: #edf2f7;
+            color: #2d3748;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+        .catalogue-table th:first-child { border-top-left-radius: 10px; }
+        .catalogue-table th:last-child { border-top-right-radius: 10px; }
+        .catalogue-table tr:last-child td { border-bottom: none; }
+
+        .catalogue-table tr:nth-child(even) {
+            background-color: #f7fafc;
+        }
+        .catalogue-table tr:hover {
+            background-color: #ebf8ff;
+        }
+        .catalogue-table img {
+            width: 100px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+        .catalogue-table img:hover {
+            transform: scale(1.05);
+        }
+        .catalogue-table .add-to-cart-btn {
+            background-color: #48bb78;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .catalogue-table .add-to-cart-btn:hover {
+            background-color: #38a169;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(72, 187, 120, 0.3);
+        }
+        .price-text {
+            font-weight: 700;
+            color: #2d3748;
+            font-size: 1.1rem;
+        }
+        .quantity-input {
+            width: 60px;
+            padding: 8px;
+            border: 1px solid #cbd5e0;
+            border-radius: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="inner-page-container">
+        <h2>Book Catalogue</h2>
+        <table class="catalogue-table">
+            <thead>
+                <tr>
+                    <th>Book Name</th>
+                    <th>Author</th>
+                    <th>Publisher</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Programming in C</td>
+                    <td>E. Balagurusamy</td>
+                    <td>McGraw Hill</td>
+                    <td class="price-text">Rs 300</td>
+                    <td><input type="number" value="1" min="1" class="quantity-input" id="qty1"></td>
+                    <td><button class="add-to-cart-btn" data-id="9" data-title="Programming in C" data-author="E. Balagurusamy" data-publisher="McGraw Hill" data-price="300">Add to Cart</button></td>
+                </tr>
+                <tr>
+                    <td>XML Bible</td>
+                    <td>Winston</td>
+                    <td>Wiley</td>
+                    <td class="price-text">Rs 405</td>
+                    <td><input type="number" value="1" min="1" class="quantity-input" id="qty1"></td>
+                    <td><button class="add-to-cart-btn" data-id="9" data-title="XML Bible" data-author="Winston" data-publisher="wiley" data-price="405">Add to Cart</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="cart_script.js"></script>
+</body>
+</html>

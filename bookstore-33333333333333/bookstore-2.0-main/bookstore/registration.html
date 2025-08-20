@@ -1,121 +1,317 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f7fafc; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .inner-page-container {
-            max-width: 500px;
-            padding: 40px;
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-            text-align: center;
-        }
-        .inner-page-container h2 {
-            font-size: 2.5rem;
-            color: #2d3748;
-            margin-bottom: 30px;
-            border-bottom: 3px solid #63b3ed;
-            padding-bottom: 15px;
-            display: inline-block;
-        }
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-        .form-group label {
-            display: block;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: #4a5568;
-            font-size: 1.1rem;
-        }
-        .form-group input[type="text"],
-        .form-group input[type="email"],
-        .form-group input[type="password"] {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #cbd5e0;
-            border-radius: 8px;
-            font-size: 1rem;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-        .form-group input[type="text"]:focus,
-        .form-group input[type="email"]:focus,
-        .form-group input[type="password"]:focus {
-            border-color: #63b3ed;
-            box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.3);
-            outline: none;
-        }
-        .form-actions {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
-        }
-        .form-actions button {
-            padding: 14px 30px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-        }
-        .form-actions button[type="submit"] {
-            background-color: #48bb78; /* Green for submit */
-            color: white;
-            box-shadow: 0 4px 10px rgba(72, 187, 120, 0.3);
-        }
-        .form-actions button[type="submit"]:hover {
-            background-color: #38a169;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(72, 187, 120, 0.4);
-        }
-        .form-actions button[type="reset"] {
-            background-color: #e2e8f0;
-            color: #4a5568;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-        }
-        .form-actions button[type="reset"]:hover {
-            background-color: #cbd5e0;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registration</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #f7fafc; }
+    .error { color: #dc2626; font-size: 0.875rem; margin-top: 6px; display: none; }
+    .ok    { color: #16a34a; font-size: 0.875rem; margin-top: 6px; display: none; }
+    .invalid { border-color: #fca5a5 !important; box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15) !important; }
+    .valid   { border-color: #86efac !important; box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15) !important; }
+  </style>
 </head>
-<body>
-    <div class="inner-page-container">
-        <h2>New User Registration</h2>
-        <form>
-            <div class="form-group">
-                <label for="reg-username">Username:</label>
-                <input type="text" id="reg-username" name="reg-username" placeholder="Choose a username" required>
-            </div>
-            <div class="form-group">
-                <label for="reg-email">Email:</label>
-                <input type="email" id="reg-email" name="reg-email" placeholder="Enter your email" required>
-            </div>
-            <div class="form-group">
-                <label for="reg-password">Password:</label>
-                <input type="password" id="reg-password" name="reg-password" placeholder="Create a password" required>
-            </div>
-            <div class="form-group">
-                <label for="confirm-password">Confirm Password:</label>
-                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
-            </div>
-            <div class="form-actions">
-                <button type="submit">Register</button>
-                <button type="reset">Clear</button>
-            </div>
-        </form>
-    </div>
+<body class="min-h-screen grid place-items-center p-6">
+  <div class="w-full max-w-2xl bg-white rounded-xl shadow-xl p-8">
+    <h2 class="text-3xl font-bold text-slate-800 pb-3 border-b-4 border-sky-400 inline-block mb-6">
+      New User Registration
+    </h2>
+
+    <form id="regForm" novalidate>
+      <!-- Name -->
+      <div class="mb-5">
+        <label for="name" class="block font-semibold text-slate-700 mb-2">Name</label>
+        <input id="name" name="name" type="text" required
+               placeholder="Your full name"
+               class="w-full rounded-lg border border-slate-300 p-3 outline-none focus:ring-4 focus:ring-sky-200 transition" />
+        <div id="nameErr" class="error">Name must be alphabetic (letters/spaces only) and at least 6 characters.</div>
+        <div id="nameOk" class="ok">Looks good.</div>
+      </div>
+
+      <!-- Password -->
+      <div class="mb-5">
+        <label for="password" class="block font-semibold text-slate-700 mb-2">Password</label>
+        <input id="password" name="password" type="password" required
+               placeholder="Create a password (min 6 chars)"
+               class="w-full rounded-lg border border-slate-300 p-3 outline-none focus:ring-4 focus:ring-sky-200 transition" />
+        <div id="passwordErr" class="error">Password must be at least 6 characters long.</div>
+        <div id="passwordOk" class="ok">Strong enough.</div>
+      </div>
+
+      <!-- Email -->
+      <div class="mb-5">
+        <label for="email" class="block font-semibold text-slate-700 mb-2">E-mail ID</label>
+        <input id="email" name="email" type="email" required
+               placeholder="name@domain.com"
+               class="w-full rounded-lg border border-slate-300 p-3 outline-none focus:ring-4 focus:ring-sky-200 transition" />
+        <div id="emailErr" class="error">Enter a valid email like name@domain.com.</div>
+        <div id="emailOk" class="ok">Valid email.</div>
+      </div>
+
+      <!-- Phone -->
+      <div class="mb-5">
+        <label for="phone" class="block font-semibold text-slate-700 mb-2">Phone Number</label>
+        <input id="phone" name="phone" type="tel" inputmode="numeric" required maxlength="10"
+               placeholder="10-digit phone number"
+               class="w-full rounded-lg border border-slate-300 p-3 outline-none focus:ring-4 focus:ring-sky-200 transition" />
+        <div id="phoneErr" class="error">Phone must be exactly 10 digits (numbers only).</div>
+        <div id="phoneOk" class="ok">Valid phone.</div>
+      </div>
+
+      <!-- Sex -->
+      <div class="mb-5">
+        <span class="block font-semibold text-slate-700 mb-2">Sex</span>
+        <div class="flex flex-wrap gap-6">
+          <label class="inline-flex items-center gap-2">
+            <input type="radio" name="sex" value="Male" class="w-4 h-4" required />
+            <span>Male</span>
+          </label>
+          <label class="inline-flex items-center gap-2">
+            <input type="radio" name="sex" value="Female" class="w-4 h-4" required />
+            <span>Female</span>
+          </label>
+          <label class="inline-flex items-center gap-2">
+            <input type="radio" name="sex" value="Other" class="w-4 h-4" required />
+            <span>Other</span>
+          </label>
+        </div>
+        <div id="sexErr" class="error mt-2">Please select your sex.</div>
+      </div>
+
+      <!-- Date of Birth -->
+      <div class="mb-5">
+        <span class="block font-semibold text-slate-700 mb-2">Date of Birth</span>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <select id="dobDay" class="rounded-lg border border-slate-300 p-3 outline-none focus:ring-4 focus:ring-sky-200" required>
+            <option value="">Day</option>
+          </select>
+          <select id="dobMonth" class="rounded-lg border border-slate-300 p-3 outline-none focus:ring-4 focus:ring-sky-200" required>
+            <option value="">Month</option>
+          </select>
+          <select id="dobYear" class="rounded-lg border border-slate-300 p-3 outline-none focus:ring-4 focus:ring-sky-200" required>
+            <option value="">Year</option>
+          </select>
+        </div>
+        <div id="dobErr" class="error mt-2">Please select a valid day, month, and year.</div>
+      </div>
+
+      <!-- Languages Known -->
+      <div class="mb-5">
+        <span class="block font-semibold text-slate-700 mb-2">Languages Known</span>
+        <div class="flex flex-wrap gap-6">
+          <label class="inline-flex items-center gap-2">
+            <input type="checkbox" name="langs" value="English" class="w-4 h-4">
+            <span>English</span>
+          </label>
+          <label class="inline-flex items-center gap-2">
+            <input type="checkbox" name="langs" value="Telugu" class="w-4 h-4">
+            <span>Telugu</span>
+          </label>
+          <label class="inline-flex items-center gap-2">
+            <input type="checkbox" name="langs" value="Hindi" class="w-4 h-4">
+            <span>Hindi</span>
+          </label>
+          <label class="inline-flex items-center gap-2">
+            <input type="checkbox" name="langs" value="Tamil" class="w-4 h-4">
+            <span>Tamil</span>
+          </label>
+        </div>
+        <div id="langsErr" class="error mt-2">Select at least one language.</div>
+      </div>
+
+      <!-- Address -->
+      <div class="mb-6">
+        <label for="address" class="block font-semibold text-slate-700 mb-2">Address</label>
+        <textarea id="address" name="address" rows="4" required
+                  placeholder="Your address"
+                  class="w-full rounded-lg border border-slate-300 p-3 outline-none focus:ring-4 focus:ring-sky-200 transition"></textarea>
+        <div id="addressErr" class="error">Address is required.</div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex items-center justify-center gap-4">
+        <button type="submit"
+                class="px-6 py-3 rounded-lg font-bold text-white bg-green-500 shadow hover:bg-green-600 transition">
+          Register
+        </button>
+        <button type="reset"
+                class="px-6 py-3 rounded-lg font-bold bg-slate-200 text-slate-700 shadow hover:bg-slate-300 transition">
+          Clear
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // --- Helpers ---
+    const show = (el) => { el.style.display = 'block'; }
+    const hide = (el) => { el.style.display = 'none'; }
+    const markValid = (el) => { el.classList.remove('invalid'); el.classList.add('valid'); }
+    const markInvalid = (el) => { el.classList.remove('valid'); el.classList.add('invalid'); }
+
+    // Populate DOB selects
+    (function initDOB(){
+      const daySel = document.getElementById('dobDay');
+      const monthSel = document.getElementById('dobMonth');
+      const yearSel = document.getElementById('dobYear');
+
+      for (let d = 1; d <= 31; d++) {
+        const opt = document.createElement('option');
+        opt.value = d; opt.textContent = d;
+        daySel.appendChild(opt);
+      }
+
+      const months = [
+        'January','February','March','April','May','June',
+        'July','August','September','October','November','December'
+      ];
+      months.forEach((m, i) => {
+        const opt = document.createElement('option');
+        opt.value = i + 1; opt.textContent = m;
+        monthSel.appendChild(opt);
+      });
+
+      const thisYear = new Date().getFullYear();
+      for (let y = thisYear; y >= 1950; y--) {
+        const opt = document.createElement('option');
+        opt.value = y; opt.textContent = y;
+        yearSel.appendChild(opt);
+      }
+    })();
+
+    // Validation functions
+    function validateName() {
+      const input = document.getElementById('name');
+      const err = document.getElementById('nameErr');
+      const ok = document.getElementById('nameOk');
+      const value = input.value.trim();
+      const valid = /^[A-Za-z ]{6,}$/.test(value);
+      if (valid) { hide(err); show(ok); markValid(input); }
+      else { hide(ok); show(err); markInvalid(input); }
+      return valid;
+    }
+
+    function validatePassword() {
+      const input = document.getElementById('password');
+      const err = document.getElementById('passwordErr');
+      const ok = document.getElementById('passwordOk');
+      const valid = input.value.length >= 6;
+      if (valid) { hide(err); show(ok); markValid(input); }
+      else { hide(ok); show(err); markInvalid(input); }
+      return valid;
+    }
+
+    function validateEmail() {
+      const input = document.getElementById('email');
+      const err = document.getElementById('emailErr');
+      const ok = document.getElementById('emailOk');
+      const value = input.value.trim();
+      const valid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(value);
+      if (valid) { hide(err); show(ok); markValid(input); }
+      else { hide(ok); show(err); markInvalid(input); }
+      return valid;
+    }
+
+    function validatePhone() {
+      const input = document.getElementById('phone');
+      input.value = input.value.replace(/\D/g, '').slice(0,10); // force digits & max 10
+      const err = document.getElementById('phoneErr');
+      const ok = document.getElementById('phoneOk');
+      const valid = /^\d{10}$/.test(input.value);
+      if (valid) { hide(err); show(ok); markValid(input); }
+      else { hide(ok); show(err); markInvalid(input); }
+      return valid;
+    }
+
+    function validateSex() {
+      const err = document.getElementById('sexErr');
+      const checked = document.querySelector('input[name="sex"]:checked');
+      if (checked) { hide(err); return true; }
+      show(err); return false;
+    }
+
+    function daysInMonth(month, year) {
+      return new Date(year, month, 0).getDate();
+    }
+
+    function validateDOB() {
+      const d = document.getElementById('dobDay');
+      const m = document.getElementById('dobMonth');
+      const y = document.getElementById('dobYear');
+      const err = document.getElementById('dobErr');
+
+      if (!d.value || !m.value || !y.value) { show(err); return false; }
+
+      const day = parseInt(d.value, 10);
+      const month = parseInt(m.value, 10);
+      const year = parseInt(y.value, 10);
+
+      const maxDay = daysInMonth(month, year);
+      const valid = day >= 1 && day <= maxDay;
+      if (valid) { hide(err); return true; }
+      show(err); return false;
+    }
+
+    function validateLangs() {
+      const err = document.getElementById('langsErr');
+      const anyChecked = Array.from(document.querySelectorAll('input[name="langs"]')).some(cb => cb.checked);
+      if (anyChecked) { hide(err); return true; }
+      show(err); return false;
+    }
+
+    function validateAddress() {
+      const input = document.getElementById('address');
+      const err = document.getElementById('addressErr');
+      const valid = input.value.trim().length > 0;
+      if (valid) { hide(err); markValid(input); }
+      else { show(err); markInvalid(input); }
+      return valid;
+    }
+
+    // Live validation listeners
+    document.getElementById('name').addEventListener('input', validateName);
+    document.getElementById('password').addEventListener('input', validatePassword);
+    document.getElementById('email').addEventListener('input', validateEmail);
+    document.getElementById('phone').addEventListener('input', validatePhone);
+    document.getElementById('address').addEventListener('input', validateAddress);
+    document.querySelectorAll('input[name="sex"]').forEach(r => r.addEventListener('change', validateSex));
+    ['dobDay','dobMonth','dobYear'].forEach(id => document.getElementById(id).addEventListener('change', validateDOB));
+    document.querySelectorAll('input[name="langs"]').forEach(cb => cb.addEventListener('change', validateLangs));
+
+    // Handle submit
+    document.getElementById('regForm').addEventListener('submit', function(e){
+      const allValid =
+        validateName() &&
+        validatePassword() &&
+        validateEmail() &&
+        validatePhone() &&
+        validateSex() &&
+        validateDOB() &&
+        validateLangs() &&
+        validateAddress();
+
+      if (!allValid) {
+        e.preventDefault();
+        // Scroll to first error
+        const firstErr = document.querySelector('.error[style*="block"]');
+        if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+        // You can replace this with actual submit or AJAX
+        alert('Form submitted successfully!');
+        // e.preventDefault(); // remove this line if posting to a server
+      }
+    });
+
+    // Clear -> hide all messages and outlines
+    document.querySelector('button[type="reset"]').addEventListener('click', () => {
+      document.querySelectorAll('.error,.ok').forEach(h => hide(h));
+      document.querySelectorAll('input,textarea,select').forEach(el => { el.classList.remove('invalid','valid'); });
+    });
+  </script>
 </body>
 </html>
+
+
